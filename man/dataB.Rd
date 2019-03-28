@@ -9,7 +9,7 @@ Hypothetical Study B data to be used in examples; landmark time = 0.50.
 }
 \usage{data(dataB)}
 \format{
- A list with 6 elements representing 1000 observations from a control group and 1000 observations from a treatment group:
+ A list with 6 elements representing 800 observations from a control group and 800 observations from a treatment group:
   \describe{
     \item{\code{s1}}{Surrogate marker measurement for treated observations; this marker is measured at time = 0.5. For observations that experience the primary outcome or are censored before 0.5, this value is NA.}
     \item{\code{x1}}{The observed event or censoring time for treated observations; X  = min(T, C) where T is the time of the primary outcome and C is the censoring time. This time is administratively censored at 0.55 (see details).}

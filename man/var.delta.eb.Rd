@@ -71,7 +71,7 @@ Variance estimation using the closed form expression under the null hypothesis o
 Variance estimate for \eqn{\sqrt{n_{B}}\hat{\Delta}_{EB}(t,t_0)}
 }
 \references{
-Parast L, Cai T, Tian L (2017). Using a Surrogate Marker for Early Testing of a Treatment Effect, Under Review.
+Parast L, Cai T, Tian L (2019). Using a Surrogate Marker for Early Testing of a Treatment Effect. Biometrics, In press.
 }
 \author{
 Layla Parast

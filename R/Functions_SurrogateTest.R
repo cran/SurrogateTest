@@ -1,9 +1,25 @@
-early.delta.test = function(Axzero, Adeltazero, Aszero, Bxzero, Bdeltazero, Bszero, Bxone, Bdeltaone, Bsone, t, landmark, perturb = T, extrapolate = T) {
+early.delta.test = function(Axzero, Adeltazero, Aszero, Bxzero, Bdeltazero, Bszero, Bxone, Bdeltaone, Bsone, t, landmark, perturb = T, extrapolate = T, transform = F) {
 	n0.A = length(Axzero)
 	n1.B = length(Bxone)
 	n0.B = length(Bxzero)
 	n.B = n1.B+n0.B
 	if(n0.A < 200 | n1.B < 200 | n0.B < 200) {print("Warning: Samples sizes are small; this procedure may not produce stable results.")}
+	 if(transform){	 	    	
+    	mean.o= mean(c(Aszero[Axzero>landmark], Bszero[Bxzero>landmark], Bsone[Bxone>landmark]), na.rm = T)
+  		sd.o = sd(c(Aszero[Axzero>landmark], Bszero[Bxzero>landmark], Bsone[Bxone>landmark]), na.rm = T)
+    	Aszero.new = pnorm((Aszero[Axzero>landmark] - mean.o)/sd.o)
+    	Bszero.new = pnorm((Bszero[Bxzero>landmark] - mean.o)/sd.o)
+    	Bsone.new = pnorm((Bsone[Bxone>landmark] - mean.o)/sd.o)
+    	sA0.new.all = rep(NA, length(Aszero))
+		sB0.new.all = rep(NA, length(Bszero))
+		sB1.new.all = rep(NA, length(Bsone))		
+		sA0.new.all[Axzero > landmark] = Aszero.new
+		sB0.new.all[Bxzero > landmark] = Bszero.new
+		sB1.new.all[Bxone > landmark] = Bsone.new
+    	Aszero = sA0.new.all
+    	Bszero = sB0.new.all
+    	Bsone = sB1.new.all
+	} 
 	A0.range = range(Aszero, na.rm = T)
 	B1.range = range(Bsone, na.rm = T); B0.range = range(Bszero, na.rm = T)
 	if((B1.range[1]< A0.range[1]) | (B0.range[1]< A0.range[1]) |  (B1.range[2]> A0.range[2]) |  (B0.range[2]> A0.range[2]) ) { print("Warning: Surrogate value ranges do not appear to overlap; consider transforming the surrogate values.")}
@@ -12,6 +28,7 @@ early.delta.test = function(Axzero, Adeltazero, Aszero, Bxzero, Bdeltazero, Bsze
 	se.closed.deltaeb = sqrt(var.closed.eb)/sqrt(n.B)
 	Z.closed.eb = sqrt(n.B)*delta.eb/sqrt(var.closed.eb)
 	p.closed = (1-pnorm(Z.closed.eb))*2
+	conf.closed.norm = c(delta.eb - 1.96*sqrt(var.closed.eb)/sqrt(n.B), delta.eb + 1.96*sqrt(var.closed.eb)/sqrt(n.B))
 	if(perturb){
 		weightA.mat = matrix(rexp(500*(n0.A), rate=1), ncol = 500)
 		weightB.mat = matrix(rexp(500*(n1.B+n0.B), rate=1), ncol = 500)
@@ -22,11 +39,12 @@ early.delta.test = function(Axzero, Adeltazero, Aszero, Bxzero, Bdeltazero, Bsze
 		conf.quantile.delta.eb = c(quantile(delta.eb.p.vec, 0.025 ), quantile(delta.eb.p.vec, 0.975 ))
 		Z.perturb.eb = sqrt(n.B)*delta.eb/sqrt(var.perturb.eb)
 		p.perturb = (1-pnorm(Z.perturb.eb))*2
+		conf.perturb.norm = c(delta.eb - 1.96*sqrt(var.perturb.eb)/sqrt(n.B), delta.eb + 1.96*sqrt(var.perturb.eb)/sqrt(n.B))
 	}
 	if(!perturb){
-		return(list("delta.eb" = delta.eb, "se.closed" = se.closed.deltaeb,"Z.closed" = Z.closed.eb, "p.value.closed" = p.closed))}
+		return(list("delta.eb" = delta.eb, "se.closed" = se.closed.deltaeb,"Z.closed" = Z.closed.eb, "p.value.closed" = p.closed, "conf.closed.norm" = conf.closed.norm))}
 	if(perturb){
-		return(list("delta.eb" = delta.eb, "se.closed" = se.closed.deltaeb,"Z.closed" = Z.closed.eb, "p.value.closed" = p.closed, "se.perturb" = se.perturb.deltaeb,"Z.perturb" = Z.perturb.eb, "p.value.perturb" = p.perturb, "delta.eb.CI" = conf.quantile.delta.eb))}
+		return(list("delta.eb" = delta.eb, "se.closed" = se.closed.deltaeb,"Z.closed" = Z.closed.eb, "p.value.closed" = p.closed, "conf.closed.norm" = conf.closed.norm, "se.perturb" = se.perturb.deltaeb,"Z.perturb" = Z.perturb.eb, "p.value.perturb" = p.perturb, "conf.perturb.norm" = conf.perturb.norm, "delta.eb.CI" = conf.quantile.delta.eb))}
 }
 
 delta.eb.single = function(Axzero, Adeltazero, Aszero, Bxzero, Bdeltazero, Bszero, Bxone, Bdeltaone, Bsone, t, landmark, weightA = NULL, weightB = NULL, weight.both = NULL,  extrapolate) {
@@ -150,12 +168,32 @@ Kern.FUN = function(zz,zi,bw,kern0="gauss") ## returns an (n x nz) matrix ##
            )
   }
 
-recover.B= function(Axzero, Adeltazero, Aszero, Axone, Adeltaone, Asone, Bxzero, Bdeltazero, Bszero, Bxone, Bdeltaone, Bsone, t, landmark, extrapolate = T){
+recover.B= function(Axzero, Adeltazero, Aszero, Axone, Adeltaone, Asone, Bxzero, Bdeltazero, Bszero, Bxone, Bdeltaone, Bsone, t, landmark, extrapolate = T, transform = F){
 	n0.A = length(Axzero)
 	n1.A = length(Axone)
 	n1.B = length(Bxone)
 	n0.B = length(Bxzero)
 	if(n0.A < 200 | n1.B < 200 | n0.B < 200 | n1.A < 200) {print("Warning: Samples sizes are small; this procedure may not produce stable results.")}
+	if(transform){	 	
+    	mean.o= mean(c(Aszero[Axzero>landmark], Asone[Axone>landmark], Bszero[Bxzero>landmark], Bsone[Bxone>landmark]), na.rm = T)
+  		sd.o = sd(c(Aszero[Axzero>landmark], Asone[Axone>landmark], Bszero[Bxzero>landmark], Bsone[Bxone>landmark]), na.rm = T)
+    	Aszero.new = pnorm((Aszero[Axzero>landmark] - mean.o)/sd.o)
+    	Asone.new = pnorm((Asone[Axone>landmark] - mean.o)/sd.o)
+    	Bszero.new = pnorm((Bszero[Bxzero>landmark] - mean.o)/sd.o)
+    	Bsone.new = pnorm((Bsone[Bxone>landmark] - mean.o)/sd.o)
+    	sA0.new.all = rep(NA, length(Aszero))
+		sA1.new.all = rep(NA, length(Asone))
+		sB0.new.all = rep(NA, length(Bszero))
+		sB1.new.all = rep(NA, length(Bsone))		
+		sA0.new.all[Axzero > landmark] = Aszero.new
+		sA1.new.all[Axone > landmark] = Asone.new
+		sB0.new.all[Bxzero > landmark] = Bszero.new
+		sB1.new.all[Bxone > landmark] = Bsone.new
+    	Aszero = sA0.new.all
+    	Asone = sA1.new.all
+    	Bszero = sB0.new.all
+    	Bsone = sB1.new.all
+	}
 	A1.range = range(Asone, na.rm = T); A0.range = range(Aszero, na.rm = T)
 	B1.range = range(Bsone, na.rm = T); B0.range = range(Bszero, na.rm = T)
 	if((A1.range[1]< A0.range[1]) | (A1.range[2]> A0.range[2]) | (B1.range[1]< A0.range[1]) | (B0.range[1]< A0.range[1]) |  (B1.range[2]> A0.range[2]) |  (B0.range[2]> A0.range[2]) ) { print("Warning: Surrogate value ranges do not appear to overlap; consider transforming the surrogate values.")}
@@ -212,7 +250,7 @@ delta.ea.single = function(Axzero, Adeltazero, Aszero, Bxzero, Bdeltazero, Bszer
 	return(delta.eb)
 }
 
-design.study= function(Axzero, Adeltazero, Aszero, Axone=NULL, Adeltaone=NULL, Asone=NULL, delta.ea = NULL, psi = NULL, R.A.given = NULL, t, landmark, extrapolate = T, adjustment = F,n=NULL, power=NULL,pi.1=0.5,pi.0=0.5, cens.rate){
+design.study= function(Axzero, Adeltazero, Aszero, Axone=NULL, Adeltaone=NULL, Asone=NULL, delta.ea = NULL, psi = NULL, R.A.given = NULL, t, landmark, extrapolate = T, adjustment = F,n=NULL, power=NULL,pi.1=0.5,pi.0=0.5, cens.rate, transform = F){
 	#checking if adjustment is needed
 	S.KM = survfit(Surv(Axzero,Adeltazero)~1)
 	S.t.KM = approx(S.KM$time,S.KM$surv,t)$y
@@ -226,6 +264,18 @@ design.study= function(Axzero, Adeltazero, Aszero, Axone=NULL, Adeltaone=NULL, A
 	if(!is.null(Axone)) {n1.A = length(Axone)}
 	if(is.null(Axone)) {n1.A = 1000}
 	if(n0.A < 200 | n1.A < 200) {print("Warning: Samples sizes are small; this procedure may not produce stable results.")}
+	if(transform){	 	
+    	mean.o= mean(c(Aszero[Axzero>landmark], Asone[Axone>landmark]), na.rm = T)
+  		sd.o = sd(c(Aszero[Axzero>landmark], Asone[Axone>landmark]), na.rm = T)
+    	Aszero.new = pnorm((Aszero[Axzero>landmark] - mean.o)/sd.o)
+    	Asone.new = pnorm((Asone[Axone>landmark] - mean.o)/sd.o)
+    	s0.new.all = rep(NA, length(Aszero))
+		s1.new.all = rep(NA, length(Asone))
+		s0.new.all[Axzero > landmark] = Aszero.new 
+		s1.new.all[Axone > landmark] = Asone.new
+    	Aszero = s0.new.all
+    	Asone = s1.new.all
+	} 
 	if(!is.null(Asone)) {
 		A1.range = range(Asone, na.rm = T); A0.range = range(Aszero, na.rm = T)
 		if((A1.range[1]< A0.range[1]) | (A1.range[2]> A0.range[2])) { print("Warning: Surrogate value ranges do not appear to overlap; consider transforming the surrogate values.")}

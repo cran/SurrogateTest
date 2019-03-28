@@ -9,7 +9,7 @@ Recover an estimate of the treatment effect at time t in Study B
 }
 \usage{
 recover.B(Axzero, Adeltazero, Aszero, Axone, Adeltaone, Asone, Bxzero, Bdeltazero, 
-Bszero, Bxone, Bdeltaone, Bsone, t, landmark, extrapolate = T)
+Bszero, Bxone, Bdeltaone, Bsone, t, landmark, extrapolate = T, transform = F)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -73,7 +73,10 @@ landmark time of interest, t0
 %%     ~~Describe \code{extrapolate} here~~
 TRUE or FALSE; indicates whether local constant extrapolation should be used, default is TRUE
 }
-
+  \item{transform}{
+%%     ~~Describe \code{transform} here~~
+TRUE or FALSE; indicates whether a transformation should be used, default is FALSE
+}
 }
 \details{
 Assume there are two randomized studies of a treatment effect, a prior study (Study A) and a current study (Study B). Study A was completed up to some time t, while Study B was stopped at time \eqn{t_0<t}. In both studies, a surrogate marker was measured at time \eqn{t_0} for individuals still observable at \eqn{t_0}. Let \eqn{G} be the binary treatment indicator with \eqn{G=1} for treatment and \eqn{G=0} for control and we assume throughout that subjects are randomly assigned to a treatment group at baseline. Let \eqn{T_K^{(1)}} and \eqn{T_K^{(0)}} denote the time of the primary outcome of interest, death for example, under the treatment and under the control, respectively, in Study K. Let \eqn{S_K^{(1)}} and \eqn{S_K^{(0)}} denote the surrogate marker measured at time \eqn{t_0} under the treatment and the control, respectively, in Study K.
@@ -96,7 +99,7 @@ Perturbation resampling is used to provide a standard error estimate for the est
 \item{conf.quantile.recovered.deltaB}{A confidence interval for the recovered estimate of \eqn{\Delta_B(t)}.}
 }
 \references{
-Parast L, Cai T, Tian L (2017). Using a Surrogate Marker for Early Testing of a Treatment Effect, Under Review.
+Parast L, Cai T, Tian L (2019). Using a Surrogate Marker for Early Testing of a Treatment Effect. Biometrics, In press.
 
 Parast L, Cai T and Tian L (2017). Evaluating Surrogate Marker Information using Censored Data. Statistics in Medicine, 36(11): 1767-1782.
 }

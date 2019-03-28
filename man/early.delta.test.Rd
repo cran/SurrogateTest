@@ -8,7 +8,7 @@ Estimate and test the early treatment effect
 Estimates the early treatment effect estimate and provides two versions of the standard error; tests the null hypothesis that this treatment effect is equal to 0 }
 \usage{
 early.delta.test(Axzero, Adeltazero, Aszero, Bxzero, Bdeltazero, Bszero, Bxone, 
-Bdeltaone, Bsone, t, landmark, perturb = T, extrapolate = T)
+Bdeltaone, Bsone, t, landmark, perturb = T, extrapolate = T, transform = F)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -64,6 +64,10 @@ TRUE or FALSE; indicates whether the standard error estimate obtained using pert
 %%     ~~Describe \code{extrapolate} here~~
 TRUE or FALSE; indicates whether local constant extrapolation should be used, default is TRUE
 }
+  \item{transform}{
+%%     ~~Describe \code{transform} here~~
+TRUE or FALSE; indicates whether a transformation should be used, default is FALSE.
+}
 }
 \details{
 Assume there are two randomized studies of a treatment effect, a prior study (Study A) and a current study (Study B). Study A was completed up to some time t, while Study B was stopped at time \eqn{t_0<t}. In both studies, a surrogate marker was measured at time \eqn{t_0} for individuals still observable at \eqn{t_0}. Let \eqn{G} be the binary treatment indicator with \eqn{G=1} for treatment and \eqn{G=0} for control and we assume throughout that subjects are randomly assigned to a treatment group at baseline. Let \eqn{T_K^{(1)}} and \eqn{T_K^{(0)}} denote the time of the primary outcome of interest, death for example, under the treatment and under the control, respectively, in Study K. Let \eqn{S_K^{(1)}} and \eqn{S_K^{(0)}} denote the surrogate marker measured at time \eqn{t_0} under the treatment and the control, respectively, in Study K.
@@ -92,14 +96,16 @@ The quantity \eqn{\hat{\sigma}_{EB}(t,t_0)} is obtained using either a closed fo
 \item{se.closed}{The standard error estimate of the early treatment effect using the closed form expression under the null.}
 \item{Z.closed}{The test statistic using the closed form standard error expression.}
 \item{p.value.closed}{The p-value using the closed form standard error expression.}
+\item{conf.closed.norm}{The confidence interval for the early treatment effect, using a normal approximation and using the closed form standard error expression.}
 \item{se.perturb}{The standard error estimate of the early treatment effect using perturbation resampling, if perturb = T.} 
 \item{Z.perturb}{The test statistic using the perturbed standard error estimate, if perturb = T.}
-\item{p.value.perturb}{The p-value using the perturbed standard error estimate, if perturb = T}
-\item{delta.eb.CI}{The confidence interval for the early treatment effect, using perturbation resampling, if perturb = T}
+\item{p.value.perturb}{The p-value using the perturbed standard error estimate, if perturb = T.}
+\item{conf.perturb.norm}{The confidence interval for the early treatment effect, using a normal approximation and using the perturbed standard error expression, if perturb = T.}
+\item{delta.eb.CI}{The confidence interval for the early treatment effect, using the quantiles of the perturbed estimates, if perturb = T.}
 }
 \references{
 %% ~put references to the literature/web site here ~
-Parast L, Cai T, Tian L (2017). Using a Surrogate Marker for Early Testing of a Treatment Effect, Under Review.
+Parast L, Cai T, Tian L (2019). Using a Surrogate Marker for Early Testing of a Treatment Effect. Biometrics, In press.
 }
 \author{
 %%  ~~who you are~~

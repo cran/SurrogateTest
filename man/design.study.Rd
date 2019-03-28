@@ -10,7 +10,7 @@ Power and sample size calculation for designing a future study
 \usage{
 design.study(Axzero, Adeltazero, Aszero, Axone = NULL, Adeltaone = NULL, Asone = 
 NULL, delta.ea = NULL, psi = NULL, R.A.given = NULL, t, landmark, extrapolate = T, 
-adjustment = F, n = NULL, power = NULL, pi.1 = 0.5, pi.0 = 0.5, cens.rate)
+adjustment = F, n = NULL, power = NULL, pi.1 = 0.5, pi.0 = 0.5, cens.rate, transform = F)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -86,6 +86,10 @@ proportion of total sample size in future study (Study B) that would be assigned
 %%     ~~Describe \code{cens.rate} here~~
 censoring in the future study (Study B) is assumed to follow an exponential distribution with censoring rate equal to this specificed value
 }
+  \item{transform}{
+%%     ~~Describe \code{transform} here~~
+TRUE or FALSE; indicates whether a transformation should be used, default is FALSE.
+}
 }
 \details{
 Assume information is available on a prior study, Study A, examining the effectiveness of a treatment up to some time of interest, t. The aim is to plan a future study, Study B, that would be conducted only up to time \eqn{t_0<t} and a test for a treatment effect would occur at \eqn{t_0}. In both studies, we assume a surrogate marker is/will be measured at time \eqn{t_0} for individuals still observable at \eqn{t_0}. Let \eqn{G} be the binary treatment indicator with \eqn{G=1} for treatment and \eqn{G=0} for control and we assume throughout that subjects are randomly assigned to a treatment group at baseline. Let \eqn{T_K^{(1)}} and \eqn{T_K^{(0)}} denote the time of the primary outcome of interest, death for example, under the treatment and under the control, respectively, in Study K. Let \eqn{S_K^{(1)}} and \eqn{S_K^{(0)}} denote the surrogate marker measured at time \eqn{t_0} under the treatment and the control, respectively, in Study K.
@@ -113,7 +117,7 @@ When the outcome rate is low (i.e., survival rate at t is high), an adjustment t
 \item{power}{Estimated power for Study B at the given sample size (if sample size is provided by user).}
 }
 \references{
-Parast L, Cai T, Tian L (2017). Using a Surrogate Marker for Early Testing of a Treatment Effect, Under Review.
+Parast L, Cai T, Tian L (2019). Using a Surrogate Marker for Early Testing of a Treatment Effect. Biometrics, In press.
 }
 \author{
 Layla Parast

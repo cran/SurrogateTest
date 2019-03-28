@@ -16,15 +16,15 @@ censor.weight(data.x, data.delta, t, weight = NULL)
 \arguments{
   \item{data.x}{
 %%     ~~Describe \code{data.x} here~~
-numeric vector, the observed event time: X = min(T, C) where T is the time of the primary outcome, C is the censoring time
+numeric vector, the observed event time: X = min(T, C) where T is the time of the primary outcome, C is the censoring time.
 }
   \item{data.delta}{
 %%     ~~Describe \code{data.delta} here~~
-numeric vector of 0/1, the censoring indicator: D = I(T<C) where T is the time of the primary outcome, C is the censoring time
+numeric vector of 0/1, the censoring indicator: D = I(T<C) where T is the time of the primary outcome, C is the censoring time.
 }
   \item{t}{
 %%     ~~Describe \code{t} here~~
-number, the time of interest
+number, the time of interest.
 }
   \item{weight}{
 %%     ~~Describe \code{weight} here~~
