@@ -1,4 +1,4 @@
-e60540590d8a502a64d04f42b1a028a1 *DESCRIPTION
+7cee3fd0c128341b973c81ce83f7d95f *DESCRIPTION
 45214add8e5de36bef55da759d880fc0 *NAMESPACE
 fbfd6306eaecab90776b303247585a5b *R/Functions_SurrogateTest.R
 66403bc5f33ec052961d3686e5958f01 *data/dataA.RData
@@ -18,5 +18,5 @@ d1f44da936a2a082c8494d4b6bf3a38e *man/early.delta.test.Rd
 e83c8752610300c075e1cf64bbcf8d77 *man/int.hazc.Rd
 934728f7085c4143bee1c1a277546e55 *man/int.hazc.plan.Rd
 83ebfd07a0170d484334e5ee8df83335 *man/pred.smooth.surv.new.Rd
-fc5795257640e23cfe1d8f23efe68526 *man/recover.B.Rd
+b0d0553e3481652eaf97740e7499ad52 *man/recover.B.Rd
 69c58e50a0f2e69be811fe78c2d73ee6 *man/var.delta.eb.Rd
