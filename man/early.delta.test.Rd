@@ -105,7 +105,7 @@ The quantity \eqn{\hat{\sigma}_{EB}(t,t_0)} is obtained using either a closed fo
 }
 \references{
 %% ~put references to the literature/web site here ~
-Parast L, Cai T, Tian L (2019). Using a Surrogate Marker for Early Testing of a Treatment Effect. Biometrics, In press.
+Parast L, Cai T, Tian L (2019). Using a Surrogate Marker for Early Testing of a Treatment Effect. Biometrics, 75(4):1253-1263.
 }
 \author{
 %%  ~~who you are~~

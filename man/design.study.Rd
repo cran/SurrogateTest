@@ -117,7 +117,7 @@ When the outcome rate is low (i.e., survival rate at t is high), an adjustment t
 \item{power}{Estimated power for Study B at the given sample size (if sample size is provided by user).}
 }
 \references{
-Parast L, Cai T, Tian L (2019). Using a Surrogate Marker for Early Testing of a Treatment Effect. Biometrics, In press.
+Parast L, Cai T, Tian L (2019). Using a Surrogate Marker for Early Testing of a Treatment Effect. Biometrics, 75(4):1253-1263.
 }
 \author{
 Layla Parast

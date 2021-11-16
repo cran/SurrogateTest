@@ -1,4 +1,4 @@
-7cee3fd0c128341b973c81ce83f7d95f *DESCRIPTION
+7b26d805f216459fb403dcbc878f424a *DESCRIPTION
 45214add8e5de36bef55da759d880fc0 *NAMESPACE
 fbfd6306eaecab90776b303247585a5b *R/Functions_SurrogateTest.R
 66403bc5f33ec052961d3686e5958f01 *data/dataA.RData
@@ -12,11 +12,11 @@ de8c1494ae3860aeb576124372dc03e1 *man/censor.weight.Rd
 3f44c10ddc00b5ca7e650d5d07e58d8b *man/delta.ea.single.Rd
 a849ac738665d3e78ec6249eabd6c5b3 *man/delta.eb.single.Rd
 866ebbb68f085b04d7e1c8f65f9efa7d *man/delta.estimate.Rd
-623fbe596503aaf7c4e382d4ea0c2b94 *man/design.study.Rd
-d1f44da936a2a082c8494d4b6bf3a38e *man/early.delta.test.Rd
+017c0c1d9696088810b43f9c1badc9de *man/design.study.Rd
+844fd29093cf07f002c6da326288bea7 *man/early.delta.test.Rd
 9edc751959b9589fafd8ba0f8bddbdfa *man/helper.si.Rd
 e83c8752610300c075e1cf64bbcf8d77 *man/int.hazc.Rd
 934728f7085c4143bee1c1a277546e55 *man/int.hazc.plan.Rd
 83ebfd07a0170d484334e5ee8df83335 *man/pred.smooth.surv.new.Rd
 b0d0553e3481652eaf97740e7499ad52 *man/recover.B.Rd
-69c58e50a0f2e69be811fe78c2d73ee6 *man/var.delta.eb.Rd
+76d500c684352bec24aeab0d4d1cf9d1 *man/var.delta.eb.Rd
